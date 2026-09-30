@@ -140,6 +140,42 @@ class MainActivity : AppCompatActivity() {
         btnGetPhoto.setOnClickListener {
             cameraLauncher.launch(null)
         }
+
+        var btnBukaMaps = findViewById<Button>(R.id.btnBukaMaps)
+        btnBukaMaps.setOnClickListener {
+            val _latitude = "-7.24611"
+            val _longtitude = "112.73750"
+            val _labelTempat = "Tugu Pahlawan"
+
+            var _mapIntent = Intent(Intent.ACTION_VIEW).apply {
+                setPackage("com.google.android.apps.maps")
+            }
+
+            if (_mapIntent.resolveActivity(packageManager) != null) {
+                startActivity(_mapIntent)
+            } else {
+                Toast.makeText(
+                    this,
+                    "Aplikasi Google Maps tidak ditemukan",
+                    Toast.LENGTH_SHORT).show()
+                val _webURI = Uri.parse("https://www.google.com/maps/search/?api=1&query=$_latitude,$_longtitude")
+                val _webIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    _webURI
+                )
+
+                try {
+                    startActivity(_webIntent)
+                } catch (e2 : Exception){
+                    Toast.makeText(
+                        this,
+                        "Tidak ada aplikasi browser yang tersedia",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
     }
 }
 
