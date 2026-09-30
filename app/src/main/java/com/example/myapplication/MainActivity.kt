@@ -11,12 +11,14 @@ import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.createBitmap
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -124,6 +126,20 @@ class MainActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
+        var ivHasil = findViewById<ImageView>(R.id.ivHasil)
+        val cameraLauncher = registerForActivityResult (
+            ActivityResultContracts.TakePicturePreview()
+        ) { bitmap ->
+            if (bitmap != null) {
+                ivHasil.setImageBitmap(bitmap)
+            }
+
+        }
+
+        var btnGetPhoto = findViewById<Button>(R.id.btnGetPhoto)
+        btnGetPhoto.setOnClickListener {
+            cameraLauncher.launch(null)
+        }
     }
 }
 
