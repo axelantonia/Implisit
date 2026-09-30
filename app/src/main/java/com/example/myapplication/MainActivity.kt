@@ -1,6 +1,8 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,5 +18,22 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        var btnKirimPesan = findViewById<Button>(R.id.btnKirimPesan)
+        btnKirimPesan.setOnClickListener {
+            val _sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra("address", "0811234")
+                putExtra("sms_body", "ISI SMS")
+                type = "text/plain"
+            }
+
+            if (_sendIntent.resolveActivity(packageManager) != null){
+                //startActivity(_sendIntent)
+                startActivity(Intent.createChooser(_sendIntent, "PILIH APLIKASI"))
+            }
+        }
     }
+
+
 }
